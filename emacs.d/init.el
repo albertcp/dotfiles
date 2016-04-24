@@ -8,7 +8,7 @@
 ;;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-;;; %%%%%%%%%%%%%%%%%%%%%% THEMES %%%%%%%%%%%%%%%%%%%%%%
+;;; %%%%%%%%%%%%%%%%%%%%%% THEMES %%%%%%%%%%%%%%%%%%%%%% 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -145,9 +145,6 @@
 ;(setq company-backends (delete 'company-semantic company-backends))
 ;(define-key c-mode  [(tab)] 'company-complete)
 ;(define-key c++-mode-map  [(tab)] 'company-complete)
-
-;;auto-complete
-(ac-config-default)
 
 
 ;;; %%%%%%%%%%%%%%%%%%%%%% FILES %%%%%%%%%%%%%%%%%%%%%
