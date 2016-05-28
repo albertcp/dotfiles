@@ -7,33 +7,6 @@
   (package-initialize))
 ;;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-;;; %%%%%%%%%%%%%%%%%%%%%% THEMES %%%%%%%%%%%%%%%%%%%%%% 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("30ba590271e63571536bcded60eca30e0645011a860be1c987fc6476c1603f15" default)))
- '(inhibit-startup-screen t)
- '(notmuch-search-line-faces
-   (quote
-    (("unread" :foreground "#8cffba")
-     ("flagged" :foreground "#ff2c4b")
-     ("deleted" :foreground "#ff9eb8" :bold t))))
- '(sr-speedbar-auto-refresh nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-;;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 ;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
 
 ;; windmode : change quickly between buffers
