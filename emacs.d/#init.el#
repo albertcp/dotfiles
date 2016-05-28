@@ -145,3 +145,5 @@
 ;; ciao-mode
 (add-to-list 'load-path "~/.emacs.d/ciao/")
 (load "ciao") ;; best not to include the ending “.el” or “.elc”
+
+;;; init.el ends here
