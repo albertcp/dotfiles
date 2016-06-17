@@ -7,6 +7,10 @@
   (package-initialize))
 ;;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+;;; %%%%%% TEMES %%%%%
+(load-theme 'badwolf t)
+;;; %%%%%%%%%%%%%%%%%%
+
 ;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
 
 ;; windmode : change quickly between buffers
@@ -20,8 +24,13 @@
 (global-set-key (kbd "C-c a") 'sr-speedbar-toggle)
 ; sr-speedbar no refresh
 (custom-set-variables
- '(sr-speedbar-auto-refresh nil)
- '(inhibit-startup-screen t))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("c4a784404a2a732ef86ee969ab94ec8b8033aee674cd20240b8addeba93e1612" default)))
+ '(inhibit-startup-screen t)
+ '(sr-speedbar-auto-refresh nil))
 
 ;; Saves. Not in .emacs.d!!
 (make-directory "~/.saves/" t)
@@ -136,6 +145,9 @@
 ;; flycheck
 (global-flycheck-mode)
 
+;; Remove toolbar
+(tool-bar-mode -1)
+
 ;;; %%%%%%%%%%%%%%%%%%%%%% FILES %%%%%%%%%%%%%%%%%%%%%
 ;; associate .pl as Ciao
 (add-to-list 'auto-mode-alist '("\\.pl$" . ciao-mode))
@@ -145,3 +157,9 @@
 ;; ciao-mode
 (add-to-list 'load-path "~/.emacs.d/ciao/")
 (load "ciao") ;; best not to include the ending “.el” or “.elc”
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
