@@ -1,56 +1,130 @@
-;;; %%%%%%%%%%%%%%%%%%%%%% INIT %%%%%%%%%%%%%%%%%%%%%%%%
+;;; init.el -- My emacs Configuration
+
+;;; Commentary:
+
+;;; Code:
+
+;;; %%%%%%%%%%%%%%%%%%%%%%%%%% INIT %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/"))
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize))
-;;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-;;; %%%%%% TEMES %%%%%
+;;; %%%%%%%%%%%%%%%%%%%%%%%% UTILITIES %%%%%%%%%%%%%%%%%%%%%%%%
+
+;; - Style
+; Theme
 (load-theme 'badwolf t)
-;;; %%%%%%%%%%%%%%%%%%
+; Remove GUI toolbar
+(tool-bar-mode -1)
 
-;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
+;; - Bindkeys
+; show up emacs menus
+(global-set-key (kbd "C-<f1O>") 'menu-bar-open)
 
-;; windmode : change quickly between buffers
+;; - Funcionality
+; windmode : change quickly between buffers
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
+
+; move lines easily
+(global-set-key (kbd "M-s <up>") 'move-text-up) ; move-text-up code at the bottom
+(global-set-key (kbd "M-s <down>") 'move-text-down); move-text-down code at bottom
+
+; show-parent-mode: Highlight brackets
+(setq show-paren-delay 0)
+(show-paren-mode 1)
+
+; mouse integration
+(require 'mouse)
+(xterm-mouse-mode t)
+(defun track-mouse (e))
+(setq mouse-sel-mode t)
+
+; enable wheel
+(global-set-key (kbd "<mouse-4>") 'down-slightly) ; down-slightly function at the bottom
+(global-set-key (kbd "<mouse-5>") 'up-slightly) ; up-slightly function at the bottom
+
+; enable wheel-click pasting
+(global-set-key (kbd "<mouse-2>") 'x-clipboard-yank)
+
+
+;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
 
 ;; speedbar : view files inside emacs
 (require 'sr-speedbar)
 (global-set-key (kbd "C-c a") 'sr-speedbar-toggle)
 ; sr-speedbar no refresh
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(custom-safe-themes (quote ("c4a784404a2a732ef86ee969ab94ec8b8033aee674cd20240b8addeba93e1612" default)))
  '(inhibit-startup-screen t)
  '(sr-speedbar-auto-refresh nil))
 
-;; Saves. Not in .emacs.d!!
-(make-directory "~/.saves/" t)
-(setq backup-directory-alist `(("." . "~/.saves/")))
+;; auto-complete :: TODO: change to company
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
 
-;; mouse integration
-(require 'mouse)
-(xterm-mouse-mode t)
-(defun track-mouse (e))
-(setq mouse-sel-mode t)
+;; yasnippet
+(require 'yasnippet)
+(yas-global-mode 1)
 
-;; enable wheel
-(defun up-slightly () (interactive) (scroll-up 5))
-(defun down-slightly () (interactive) (scroll-down 5))
-(global-set-key (kbd "<mouse-4>") 'down-slightly)
-(global-set-key (kbd "<mouse-5>") 'up-slightly)
+;; auto-complete-c-headers
+(defun my:ac-c-header-init()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-to-list 'achead:include-directories '"/usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include"))
+ ; (add-to-list 'achead:include-directories '"/usr/lib/gcc/x86_64-unknown-linux-gnu/*/include"))
 
-;; enable wheel-click pasting
-(global-set-key (kbd "<mouse-2>") 'x-clipboard-yank)
+(add-hook 'c++-mode-hook 'my:ac-c-header-init)
+(add-hook 'c-mode-hook 'my:ac-c-header-init)
 
+;; iedit config
+(define-key global-map (kbd "C-c ,") 'iedit-mode)
+
+;; company-mode
+;(require 'company)
+;(add-hook 'after-init-hook 'global-company-mode)
+; company-mode for Clang
+;(setq company-backends (delete 'company-semantic company-backends))
+;(define-key c-mode  [(tab)] 'company-complete)
+;(define-key c++-mode-map  [(tab)] 'company-complete)
+
+;; irony autocompletion
+;(add-hook 'c++-mode-hook 'irony-mode)
+;(add-hook 'c-mode-hook 'irony-mode)
+;(add-hook 'objc-mode-hook 'irony-mode)
+; replace the completion-at-point' and complete-symbol' bindings in
+; irony-mode's buffers by irony-mode's function
+;(defun my-irony-mode-hook ()
+; (define-key irony-mode-map [remap completion-at-point]
+;    'irony-completion-at-point-async)
+;  (define-key irony-mode-map [remap complete-symbol]
+;    'irony-completion-at-point-async))
+;(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+;; flycheck
+(global-flycheck-mode)
+
+
+;;; %%%%%%%%%%%%%%%%%%%%%% FILES %%%%%%%%%%%%%%%%%%%%%
+;; associate .pl as Ciao
+(add-to-list 'auto-mode-alist '("\\.pl$" . ciao-mode))
+
+
+;;; %%%%%%%%%%%%%%%%%%%%%% MODES %%%%%%%%%%%%%%%%%%%%%
+;; ciao-mode: ciao - a prolog interpreter
+(add-to-list 'load-path "~/.emacs.d/ciao/")
+(load "ciao") ;; best not to include the ending “.el” or “.elc”
+
+
+;;; %%%%%%%%%%%%%%%%%%%%%%  Code %%%%%%%%%%%%%%%%%%%%%
 ;; move lines
 (defun move-text-internal (arg)
   (cond
@@ -81,85 +155,19 @@
       (move-to-column column t)))))
 
 (defun move-text-down (arg)
-  "Move region (transient-mark-mode active) or current line
-  arg lines down."
+  "Move region (transient-mark-mode active) or current line ARG lines down."
   (interactive "*p")
   (move-text-internal arg))
 
 (defun move-text-up (arg)
-  "Move region (transient-mark-mode active) or current line
-  arg lines up."
+  "Move region (transient-mark-mode active) or current line ARG lines up."
   (interactive "*p")
   (move-text-internal (- arg)))
 
-;; move lines easily
-(global-set-key (kbd "M-s <up>") 'move-text-up)
-(global-set-key (kbd "M-s <down>") 'move-text-down)
-
-;; helm-gtags
-(setq
- helm-gtags-ignore-case t
- helm-gtags-auto-update t
- helm-gtags-use-input-at-cursor t
- helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-cg"
- helm-gtags-suggested-key-mapping t
- )
-(require 'helm-gtags)
-; Enable helm-gtags-mode
-(add-hook 'dired-mode-hook 'helm-gtags-mode)
-(add-hook 'eshell-mode-hook 'helm-gtags-mode)
-;(add-hook 'c-mode-hook 'helm-gtags-mode)
-;(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
-(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-
-;; company-mode
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-; company-mode for Clang
-;(setq company-backends (delete 'company-semantic company-backends))
-;(define-key c-mode  [(tab)] 'company-complete)
-;(define-key c++-mode-map  [(tab)] 'company-complete)
-
-;; irony autocompletion
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-; replace the completion-at-point' and complete-symbol' bindings in
-; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-;; flycheck
-(global-flycheck-mode)
-
-;; Remove toolbar
-(tool-bar-mode -1)
-
-;;; %%%%%%%%%%%%%%%%%%%%%% FILES %%%%%%%%%%%%%%%%%%%%%
-;; associate .pl as Ciao
-(add-to-list 'auto-mode-alist '("\\.pl$" . ciao-mode))
+;; enable wheel
+(defun up-slightly () (interactive) (scroll-up 5))
+(defun down-slightly () (interactive) (scroll-down 5))
 
 
-;;; %%%%%%%%%%%%%%%%%%%%%% MODES %%%%%%%%%%%%%%%%%%%%%
-;; ciao-mode
-(add-to-list 'load-path "~/.emacs.d/ciao/")
-(load "ciao") ;; best not to include the ending “.el” or “.elc”
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(provide 'init)
+;;; init.el ends here
