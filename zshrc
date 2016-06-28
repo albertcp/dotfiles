@@ -60,10 +60,9 @@ antigen apply
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 #------- Work -------- #
-source /opt/ros/jade/setup.bash
+source /opt/ros/jade/setup.zsh
 export AEROSTACK_WORKSPACE=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws
 export AEROSTACK_STACK=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws/src/quadrotor_stack
 export DRONE_STACK=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws/src/quadrotor_stack
 export EDITOR='emacs -nw'
-
-source /opt/ros/jade/setup.bash
+source $AEROSTACK_WORKSPACE/devel/setup.zsh
