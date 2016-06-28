@@ -12,40 +12,38 @@ zstyle :compinstall filename '/home/albertcp/.zshrc'
 
 autoload -Uz compinit
 compinit
-#---------------------- End of lines added by compinstall -----------------------------#
+#-------------------------- End of lines added by compinstall ------------------------#
 
-#----------------------- Extra configuration ------------------------------------------#
+#------------------------------ Extra zsh configuration ------------------------------#
 autoload -U promptinit
 promptinit
 
-# This will set the default prompt to the walters theme
-#prompt redhat 
 #autocompletion with arrow-key driven interface
 zstyle ':completion:*' menu select
 #autocompletion of command line switches for aliases
 setopt completealiases
 #preventing duplicate lines in the history
 setopt HIST_IGNORE_DUPS
-#----------------------- end extra configuration -------------------------------------#
+#------------------------------ end extra zsh configuration --------------------------#
 
-#---------------------------------CONFIGURATION---------------------------------------#
+#-----------------------------------CONFIGURATION-------------------------------------#
 ## BEGIN ALIASES [pendiente de ponerlo en 1 archivo independiente .zsh_alises]
-alias montar-triqui='sshfs v130120@www.alumnos.fi.upm.es:.'
-alias montar-raspi='sshfs pi@albertcp.no-ip.org:. ~/Escritorio/raspi-home'
 alias emacs-nox='emacs -nw'
-alias tiempo='curl -4 wttr.in'
-alias tiempo-luna='curl -4 wttr.in/Moon'
+alias weather='curl -4 wttr.in'
+alias moon-weather='curl -4 wttr.in/Moon'
 ## END ALIASES
 
 ## BEGIN  ENV VARIABLES
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
+export EDITOR='emacs -nw'
 ## END ENV VARIABLES
 
-# mascara
+## mask
 umask 0037
-#------------------------------- END CONFIGURATION -----------------------------------#
 
-#------------------------------- START ANTIGEN ---------------------------------------#
+#---------------------------------- END CONFIGURATION --------------------------------#
+
+#----------------------------------- START ANTIGEN -----------------------------------#
 export TERM='xterm-256color'
 source /usr/share/zsh/scripts/antigen/antigen.zsh
 #load the oh-my-zsh library
@@ -54,15 +52,17 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen theme lukerandall
 antigen apply
-#------------------------------- End Antigen -----------------------------------------#
+#------------------------------------ End Antigen -----------------------------------#
 
+#-------------------------------------- Addons --------------------------------------#
 # zsh-autosuggestions
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#------------------------------------- End Addons -----------------------------------#
 
-#------- Work -------- #
+#------------------------------------- AEROSTACK ------------------------------------#
 source /opt/ros/jade/setup.zsh
 export AEROSTACK_WORKSPACE=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws
 export AEROSTACK_STACK=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws/src/quadrotor_stack
 export DRONE_STACK=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws/src/quadrotor_stack
-export EDITOR='emacs -nw'
 source $AEROSTACK_WORKSPACE/devel/setup.zsh
+#------------------------------------ END AEROSTACK ---------------------------------#
