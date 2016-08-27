@@ -123,6 +123,12 @@
 (add-to-list 'load-path "~/.emacs.d/ciao/")
 (load "ciao") ;; best not to include the ending “.el” or “.elc”
 
+;; ghc-mod : extension for emacs mode
+;(add-to-list 'load-path "~/.cabal/share/x86_64-linux-ghc-8.0.1/ghc-mod-5.6.0.0/elisp/")
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+
 
 ;;; %%%%%%%%%%%%%%%%%%%%%%  Code %%%%%%%%%%%%%%%%%%%%%
 ;; move lines
