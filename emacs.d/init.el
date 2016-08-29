@@ -1,6 +1,6 @@
 ;;; init.el -- My emacs Configuration
-
 ;;; Commentary:
+;;; This is a work branch.  Here is everything related to ROS and C++
 
 ;;; Code:
 
@@ -15,15 +15,30 @@
 
 ;;; %%%%%%%%%%%%%%%%%%%%%%%% UTILITIES %%%%%%%%%%%%%%%%%%%%%%%%
 
+;; Replace highlighted text in type
+(delete-selection-mode 1)
+
+;; Make zshrc be recognized as .zshrc
+(add-to-list 'auto-mode-alist '("zshrc" . sh-mode))
+
 ;; - Style
 ; Theme
 (load-theme 'badwolf t)
 ; Remove GUI toolbar
 (tool-bar-mode -1)
+; Remove scroll bars
+(scroll-bar-mode -1)
 
 ;; - Bindkeys
-; show up emacs menus
+; Show up emacs menus
 (global-set-key (kbd "C-<f1O>") 'menu-bar-open)
+; Quick buffer switching
+(global-set-key (kbd "C-<tab>") 'mode-line-other-buffer)
+; Open zsh terminal
+(defun open-term ()
+  (interactive)
+  (ansi-term "/usr/bin/zsh"))
+(global-set-key (kbd "C-<f3>") 'open-term)
 
 ;; - Funcionality
 ; windmode : change quickly between buffers
@@ -33,25 +48,17 @@
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
 ; move lines easily
-(global-set-key (kbd "M-s <up>") 'move-text-up) ; move-text-up code at the bottom
-(global-set-key (kbd "M-s <down>") 'move-text-down); move-text-down code at bottom
+(global-set-key (kbd "M-S-<up>") 'move-text-up)
+(global-set-key (kbd "M-S-<down>") 'move-text-down)
 
 ; show-parent-mode: Highlight brackets
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
-; mouse integration
-(require 'mouse)
-(xterm-mouse-mode t)
-(defun track-mouse (e))
-(setq mouse-sel-mode t)
-
-; enable wheel
-(global-set-key (kbd "<mouse-4>") 'down-slightly) ; down-slightly function at the bottom
-(global-set-key (kbd "<mouse-5>") 'up-slightly) ; up-slightly function at the bottom
-
-; enable wheel-click pasting
-(global-set-key (kbd "<mouse-2>") 'x-clipboard-yank)
+; Switch between camel cased & underscored
+(require 'string-inflection)
+(global-unset-key (kbd "C-q"))
+(global-set-key (kbd "C-q C-u") 'string-inflection-all-cycle)
 
 
 ;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
@@ -64,58 +71,62 @@
  '(custom-safe-themes (quote ("c4a784404a2a732ef86ee969ab94ec8b8033aee674cd20240b8addeba93e1612" default)))
  '(inhibit-startup-screen t)
  '(sr-speedbar-auto-refresh nil))
+; Prevent speedbar refresh
+(sr-speedbar-refresh-turn-off)
+; show all files
+(setq speedbar-show-unknown-files t)
 
-;; auto-complete :: TODO: change to company
-(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
 
-;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
+;; AutoComplete for C/C++
+(require 'company)
+(require 'irony)
+(add-to-list 'company-backends 'company-irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+(add-hook 'c++-mode-hook 'company-mode)
+(add-hook 'c-mode-hook 'company-mode)
+(add-hook 'objc-mode-hook 'company-mode)
 
-;; auto-complete-c-headers
-(defun my:ac-c-header-init()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  (add-to-list 'achead:include-directories '"/usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include"))
- ; (add-to-list 'achead:include-directories '"/usr/lib/gcc/x86_64-unknown-linux-gnu/*/include"))
+;; Syntax checking
+(global-flycheck-mode)
+(require 'flycheck)
+(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
 
-(add-hook 'c++-mode-hook 'my:ac-c-header-init)
-(add-hook 'c-mode-hook 'my:ac-c-header-init)
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+
+;; ROS stuff
+(defun ROS-c-mode-hook()
+  (setq c-basic-offset 2)
+  (setq indent-tabs-mode nil)
+  (c-set-offset 'substatement-open 0)
+  (c-set-offset 'innamespace 0)
+  (c-set-offset 'case-label '+))
+(add-hook 'c-mode-common-hook 'ROS-c-mode-hook)
 
 ;; iedit config
 (define-key global-map (kbd "C-c ,") 'iedit-mode)
-
-;; company-mode
-;(require 'company)
-;(add-hook 'after-init-hook 'global-company-mode)
-; company-mode for Clang
-;(setq company-backends (delete 'company-semantic company-backends))
-;(define-key c-mode  [(tab)] 'company-complete)
-;(define-key c++-mode-map  [(tab)] 'company-complete)
-
-;; irony autocompletion
-;(add-hook 'c++-mode-hook 'irony-mode)
-;(add-hook 'c-mode-hook 'irony-mode)
-;(add-hook 'objc-mode-hook 'irony-mode)
-; replace the completion-at-point' and complete-symbol' bindings in
-; irony-mode's buffers by irony-mode's function
-;(defun my-irony-mode-hook ()
-; (define-key irony-mode-map [remap completion-at-point]
-;    'irony-completion-at-point-async)
-;  (define-key irony-mode-map [remap complete-symbol]
-;    'irony-completion-at-point-async))
-;(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-;; flycheck
-(global-flycheck-mode)
 
 
 ;;; %%%%%%%%%%%%%%%%%%%%%% FILES %%%%%%%%%%%%%%%%%%%%%
 ;; associate .pl as Ciao
 (add-to-list 'auto-mode-alist '("\\.pl$" . ciao-mode))
+
+;; Make .launch files be recognized as xml
+(add-to-list 'auto-mode-alist '("\\.launch$" . nxml-mode))
+
+;; In order to get namespace indentation correct, .h files must be opened in C++ mode
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 
 ;;; %%%%%%%%%%%%%%%%%%%%%% MODES %%%%%%%%%%%%%%%%%%%%%
@@ -163,10 +174,6 @@
   "Move region (transient-mark-mode active) or current line ARG lines up."
   (interactive "*p")
   (move-text-internal (- arg)))
-
-;; enable wheel
-(defun up-slightly () (interactive) (scroll-up 5))
-(defun down-slightly () (interactive) (scroll-down 5))
 
 
 (provide 'init)
