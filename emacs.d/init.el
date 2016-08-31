@@ -15,6 +15,12 @@
 
 ;;; %%%%%%%%%%%%%%%%%%%%%%%% UTILITIES %%%%%%%%%%%%%%%%%%%%%%%%
 
+;; Allow spanish keyboard
+(require 'iso-transl)
+
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs-autosaves/" t)
+
 ;; Replace highlighted text in type
 (delete-selection-mode 1)
 
