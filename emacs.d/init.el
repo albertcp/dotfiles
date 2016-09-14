@@ -5,6 +5,10 @@
 ;;; Code:
 
 ;;; %%%%%%%%%%%%%%%%%%%%%%%%%% INIT %%%%%%%%%%%%%%%%%%%%%%%%%%%
+'(indent-tabs-mode nil)
+'(inhibit-startup-screen t)
+'(whitespace-line-column 95)
+
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -27,6 +31,11 @@
 ;; Make zshrc be recognized as .zshrc
 (add-to-list 'auto-mode-alist '("zshrc" . sh-mode))
 
+;; Enable whitespace mode
+(require 'whitespace)
+(global-set-key (kbd "C-c w") 'global-whitespace-mode)
+;(global-whitespace-mode)
+
 ;; - Style
 ; Theme
 (load-theme 'badwolf t)
@@ -48,10 +57,10 @@
 
 ;; - Funcionality
 ; windmode : change quickly between buffers
-(global-set-key (kbd "C-c <left>")  'windmove-left)
-(global-set-key (kbd "C-c <right>") 'windmove-right)
-(global-set-key (kbd "C-c <up>")    'windmove-up)
-(global-set-key (kbd "C-c <down>")  'windmove-down)
+(global-set-key (kbd "C-S-<left>")  'windmove-left)
+(global-set-key (kbd "C-S-<right>") 'windmove-right)
+(global-set-key (kbd "C-S-<up>")    'windmove-up)
+(global-set-key (kbd "C-S-<down>")  'windmove-down)
 
 ; move lines easily
 (global-set-key (kbd "M-S-<up>") 'move-text-up)
@@ -69,18 +78,13 @@
 
 ;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
 
-;; speedbar : view files inside emacs
-(require 'sr-speedbar)
-(global-set-key (kbd "C-c a") 'sr-speedbar-toggle)
-; sr-speedbar no refresh
-(custom-set-variables
- '(custom-safe-themes (quote ("c4a784404a2a732ef86ee969ab94ec8b8033aee674cd20240b8addeba93e1612" default)))
- '(inhibit-startup-screen t)
- '(sr-speedbar-auto-refresh nil))
-; Prevent speedbar refresh
-(sr-speedbar-refresh-turn-off)
-; show all files
-(setq speedbar-show-unknown-files t)
+;; Complete closing braces
+(require 'autopair)
+(autopair-global-mode)
+
+;; NeoTree: view files inside emacs
+(require 'neotree)
+(global-set-key [f2] 'neotree-toggle)
 
 
 ;; AutoComplete for C/C++
