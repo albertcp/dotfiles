@@ -21,6 +21,16 @@
 ; Remove GUI toolbar
 (tool-bar-mode -1)
 
+;; Highlight matching parenthesis
+(show-paren-mode 1)
+
+;; Remove scroll bars
+(setq show-paren-delay 0)
+(scroll-bar-mode -1)
+
+;; Replace highlighted text in type
+(delete-selection-mode 1)
+
 ;; - Bindkeys
 ; show up emacs menus
 (global-set-key (kbd "C-<f1O>") 'menu-bar-open)
@@ -35,23 +45,6 @@
 ; move lines easily
 (global-set-key (kbd "M-s <up>") 'move-text-up) ; move-text-up code at the bottom
 (global-set-key (kbd "M-s <down>") 'move-text-down); move-text-down code at bottom
-
-; show-parent-mode: Highlight brackets
-(setq show-paren-delay 0)
-(show-paren-mode 1)
-
-; mouse integration
-(require 'mouse)
-(xterm-mouse-mode t)
-(defun track-mouse (e))
-(setq mouse-sel-mode t)
-
-; enable wheel
-(global-set-key (kbd "<mouse-4>") 'down-slightly) ; down-slightly function at the bottom
-(global-set-key (kbd "<mouse-5>") 'up-slightly) ; up-slightly function at the bottom
-
-; enable wheel-click pasting
-(global-set-key (kbd "<mouse-2>") 'x-clipboard-yank)
 
 
 ;;; %%%%%%%%%%%%%%%%%%%%%% ADDONS CONFIG %%%%%%%%%%%%%%%%%%%%%%
@@ -169,10 +162,6 @@
   "Move region (transient-mark-mode active) or current line ARG lines up."
   (interactive "*p")
   (move-text-internal (- arg)))
-
-;; enable wheel
-(defun up-slightly () (interactive) (scroll-up 5))
-(defun down-slightly () (interactive) (scroll-down 5))
 
 
 (provide 'init)
