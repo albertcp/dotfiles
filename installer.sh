@@ -1,11 +1,36 @@
-echo "Creating dotfiles symbolic links"
-ZSH_DIR=$(pwd)/zsh/.zshrc
-EMACS_DIR=$(pwd)/emacs.d
+GIT_REPO=$PWD
 
-echo "Creating zshrc symbolic link..."
-ln -s $ZSH_DIR $HOME/.zshrc
-echo "... Done"
-echo "Creating emacs symbolic link..."
-ln -s $EMACS_DIR $HOME/.emacs.d
-echo "... Done"
-echo "Every link created correctly"
+#Checking if emacs.d directoy exists
+if [ -d "emacs.d" ]; then
+  echo "Removing previous emacs.d directory"
+  rm -rf emacs.d
+  echo "... done"
+  sleep 2
+fi
+
+#Installing spacemacs
+echo "Installing spacemacs repository..."
+git clone https://github.com/syl20bnr/spacemacs ./emacs.d
+sleep 2
+
+#Creating spacemacs link
+echo "Creating spacemacs links..."
+cd $HOME
+if [ -L ".emacs.d" ] || [ -d ".emacs.d" ]; then
+  rm -rf .emacs.d
+fi
+ln -s $GIT_REPO/emacs.d ./.emacs.d
+if [ -L ".spacemacs" ]; then
+  rm .spacemacs
+fi
+ln -s $GIT_REPO/spacemacs ./.spacemacs
+cd $GIT_REPO
+echo "...done"
+
+#Creating zsh links
+echo ""
+echo "WARNING: You have to install zsh manually. Autoinstalling not implemented yet"
+echo ""
+
+echo "Everything done!"
+

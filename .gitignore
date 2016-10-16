@@ -1,1 +1,2 @@
-emacs.d/.cache/*
+$GIT_DIR/emacs.d
+emacs.d
