@@ -31,10 +31,16 @@ setopt HIST_IGNORE_DUPS
 alias emacs-nox='emacs -nw'
 alias weather='curl -4 wttr.in'
 alias moon-weather='curl -4 wttr.in/Moon'
+
+# Aerostack aliases
+alias cmirony-error.txt='catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=ON 2> error.txt'
+alias cmirony='catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
+alias cm='catkin_make'
+alias cm-error.txt='catkin_make 2> error.txt' 
+
 ## END ALIASES
 
 ## BEGIN  ENV VARIABLES
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
 export EDITOR='emacs -nw'
 ## END ENV VARIABLES
 
