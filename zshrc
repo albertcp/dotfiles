@@ -18,8 +18,6 @@ compinit
 autoload -U promptinit
 promptinit
 
-# This will set the default prompt to the walters theme
-#prompt redhat 
 #autocompletion with arrow-key driven interface
 zstyle ':completion:*' menu select
 #autocompletion of command line switches for aliases
