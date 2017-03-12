@@ -28,9 +28,21 @@ cd $GIT_REPO
 echo "...done"
 
 #Creating zsh links
-echo ""
-echo "WARNING: You have to install zsh manually. Autoinstalling not implemented yet"
-echo ""
+echo "installing zsh"
+sudo pacman -S zsh --noconfirm
+echo "zsh installed"
+
+echo "checkout links zsh"
+echo "TODO::: LINKING ZSH"
+
+echo "Installing Oh-my-zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+echo "Oh-MY-ZSH installed"
+
+echo "Installing autocomplete"
+git clone git://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+echo "ZSH autosuggestions installed"
+
 
 echo "Everything done!"
 

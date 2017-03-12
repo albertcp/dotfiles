@@ -1,0 +1,38 @@
+### Variables
+export WORKSPACE="/home/$USER/Workspace"
+
+
+### Mount aliases
+function mount-triqui(){
+  path=$2
+  if [ $# -gt 1 ];then
+    path="~/triqui"
+  fi
+  sshfs $1@www.alumnos.fi.upm.es:. $path
+}
+
+function mount-raspi(){
+  $ip=
+  sshfs $1@$ip:. ~/Raspi
+}
+
+### Program aliases
+alias emacs-term='emacs -nw'
+
+### Directory aliases
+function cdwrk(){
+  cd $WORKSPACE/$1
+}
+
+### Miscellaneous aliases
+alias weather='curl -4 wttr.in'
+alias weather-moon='curl -4 wttr.in/Moon'
+alias todo='emacs $WORKSPACE/TODO.org &'
+
+
+### Completions functions
+_cdwrk(){
+  _path_files -W $WORKSPACE -/
+}
+
+compdef _cdwrk cdwrk
