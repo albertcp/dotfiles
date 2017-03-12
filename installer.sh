@@ -33,16 +33,23 @@ sudo pacman -S zsh --noconfirm
 echo "zsh installed"
 
 echo "checkout links zsh"
-echo "TODO::: LINKING ZSH"
+rm .zshrc
+ln -s $GIT_REPO/zshrc $HOME/.zshrc
+ln -s $GIT_REPO/aliases $HOME/.aliases
+echo "aliases created"
 
 echo "Installing Oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 echo "Oh-MY-ZSH installed"
-
+source ~/.zshrc
 echo "Installing autocomplete"
 git clone git://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 echo "ZSH autosuggestions installed"
 
+
+echo "Installing zsh syntax"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+echo "done"
 
 echo "Everything done!"
 
