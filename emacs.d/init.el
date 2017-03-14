@@ -17,14 +17,23 @@
 
 '(indent-tabs-mode nil)
 '(inhibit-startup-screen t)
+(setq-default cursor-type 'bar)
+ 
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
+ '(autopair-blink t)
+ '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
+ '(blink-cursor-mode nil)
+ '(cursor-in-non-selected-windows nil)
  '(fill-column 70)
  '(global-whitespace-mode nil)
+ '(inhibit-startup-screen t)
+ '(make-cursor-line-fully-visible nil)
  '(minimap-highlight-line nil)
  '(minimap-minimum-width 0)
  '(minimap-width-fraction 0.15)
@@ -42,7 +51,10 @@
  '(tabbar-ruler-modified-symbol t)
  '(tabbar-ruler-style (quote (quote firefox)))
  '(tabbar-ruler-swap-faces nil)
- '(whitespace-line-column 2000))
+ '(visible-cursor t)
+ '(void-text-area-pointer nil)
+ '(whitespace-line-column 2000)
+ '(x-stretch-cursor nil))
 ;;; %%%%%%%%%%%%%%%%%%%%%%%% UTILITIES %%%%%%%%%%%%%%%%%%%%%%%%
 
 ;; Allow spanish keyboard
@@ -194,6 +206,19 @@
 
 
 ;;; %%%%%%%%%%%%%%%%%%%%%%  Code %%%%%%%%%%%%%%%%%%%%%
+;; Color FIXME
+(add-hook 'c++-mode-hook
+          (lambda ()
+           (font-lock-add-keywords nil
+            '(("\\<\\(FIXME\\):" 1
+               font-lock-warning-face t)))))
+;; Color TODO
+(add-hook 'c++-mode-hook
+          (lambda ()
+           (font-lock-add-keywords nil
+            '(("\\<\\(TODO\\):" 1
+               font-lock-warning-face t)))))
+
 ;; move lines
 (defun move-text-internal (arg)
   (cond
