@@ -172,7 +172,7 @@ compdef _cdconfigs cdconfigs
 ## END ALIASES
 
 ## BEGIN  ENV VARIABLES
-export EDITOR='emacs -nw'
+export EDITOR='nano'
 ## END ENV VARIABLES
 
 ## mask
