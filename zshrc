@@ -1,60 +1,104 @@
-# --------------------- Lines configured by zsh-newuser-install -----------------------#
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
-setopt notify
-unsetopt autocd
-bindkey -e
-# --------------------- End of lines configured by zsh-newuser-install ----------------#
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/.cargo/bin:$PATH"
 
-#---------------------- The following lines were added by compinstall -----------------#
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="risto"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+export UPDATE_ZSH_DAYS=7
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="false"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+ HIST_STAMPS="dd/mm/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git pass archlinux zsh-syntax-highlighting rust)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+export ARCHFLAGS="-arch x86_64"
+
+# ssh
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+## ALIASES
+if [ -f ~/.aliases ]; then
+    . ~/.aliases
+fi
+
+######################### Compinstall autoconfig
 zstyle :compinstall filename '/home/albertcp/.zshrc'
 
 autoload -Uz compinit
 compinit
-#---------------------- End of lines added by compinstall -----------------------------#
-
-#----------------------- Extra configuration ------------------------------------------#
 autoload -U promptinit
 promptinit
 
-# This will set the default prompt to the walters theme
-#prompt redhat 
 #autocompletion with arrow-key driven interface
 zstyle ':completion:*' menu select
 #autocompletion of command line switches for aliases
 setopt completealiases
 #preventing duplicate lines in the history
 setopt HIST_IGNORE_DUPS
-#----------------------- end extra configuration -------------------------------------#
 
-#---------------------------------CONFIGURATION---------------------------------------#
-## BEGIN ALIASES [pendiente de ponerlo en 1 archivo independiente .zsh_alises]
-alias montar-triqui='sshfs v130120@www.alumnos.fi.upm.es:.'
-alias montar-raspi='sshfs pi@albertcp.no-ip.org:. ~/Escritorio/raspi-home'
-alias emacs-nox='emacs -nw'
-alias tiempo='curl -4 wttr.in'
-alias tiempo-luna='curl -4 wttr.in/Moon'
-## END ALIASES
-
-## BEGIN  ENV VARIABLES
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
-## END ENV VARIABLES
-
-# mascara
+###### User configuration
 umask 0037
-#------------------------------- END CONFIGURATION -----------------------------------#
 
-#------------------------------- START ANTIGEN ---------------------------------------#
-export TERM='xterm-256color'
-source /usr/share/zsh/scripts/antigen/antigen.zsh
-#load the oh-my-zsh library
-antigen use oh-my-zsh
-
-antigen bundle git
-antigen theme lukerandall
-antigen apply
-#------------------------------- End Antigen -----------------------------------------#
-
-# zsh-autosuggestions
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
