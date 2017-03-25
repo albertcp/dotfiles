@@ -1,0 +1,16 @@
+emacs.d/.github/
+emacs.d/.gitignore
+emacs.d/.projectile
+emacs.d/.travis-build.sh
+emacs.d/.travis.yml
+emacs.d/CHANGELOG.org
+emacs.d/COMMUNITY.org
+emacs.d/CONTRIBUTING.org
+emacs.d/README.md
+emacs.d/assets/
+emacs.d/core/
+emacs.d/doc/
+emacs.d/layers/
+emacs.d/news/
+emacs.d/spacemacs.mk
+emacs.d/tests/
