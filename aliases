@@ -1,0 +1,45 @@
+# -- Variables -- #
+export WORKSPACE="/home/$USER/Workspace"
+
+
+# -- Program aliases -- #
+alias emacs-term='emacs -nw'
+function emacs(){
+  if[ #? -eq 0 ];then
+    emacs &
+  else
+    emacs $1 &
+  fi
+}
+
+# -- Miscellaneous aliases -- #
+alias weather='curl -4 wttr.in'
+alias weather-moon='curl -4 wttr.in/Moon'
+alias todo='emacs $WORKSPACE/TODO.org &'
+
+
+# -- Directory aliases -- #
+function cdwrk(){
+  cd $WORKSPACE/$1
+}
+
+function cdpersonal(){
+  cd $WORKSPACE/Personal/$1
+}
+
+
+# -- Private aliases -- #
+. ~/.private_aliases
+
+
+# -- Completions functions -- #
+_cdwrk(){
+  _path_files -W $WORKSPACE -/
+}
+
+_cdpersonal(){
+  _path_files -W $WORKSPACE/Personal -/
+}
+
+compdef _cdwrk cdwrk
+compdef _cdpersonal cdpersonal

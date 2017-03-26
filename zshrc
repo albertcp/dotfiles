@@ -23,9 +23,6 @@ ZSH_THEME="risto"
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=7
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
@@ -43,7 +40,7 @@ ENABLE_CORRECTION="false"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
- HIST_STAMPS="dd/mm/yyyy"
+HIST_STAMPS="dd/mm/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -52,7 +49,7 @@ ENABLE_CORRECTION="false"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git pass archlinux zsh-syntax-highlighting rust)
+plugins=(git pass archlinux zsh-syntax-highlighting zsh-autosuggestions rust)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -73,7 +70,7 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
-# ssh
+# SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 ## ALIASES
@@ -89,16 +86,17 @@ compinit
 autoload -U promptinit
 promptinit
 
-#autocompletion with arrow-key driven interface
+# Autocompletion with arrow-key driven interface
 zstyle ':completion:*' menu select
-#autocompletion of command line switches for aliases
+
+# Autocompletion of command line switches for aliases
 setopt completealiases
-#preventing duplicate lines in the history
+# Preventing duplicate lines in the history
 setopt HIST_IGNORE_DUPS
 
 ###### User configuration
 umask 0037
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
