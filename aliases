@@ -4,13 +4,14 @@ export WORKSPACE="/home/$USER/Workspace"
 
 # -- Program aliases -- #
 alias emacs-term='emacs -nw'
-function emacs(){
-  if[ #? -eq 0 ];then
+function startEmacs(){
+  if [ $# -eq 0 ]; then
     emacs &
   else
     emacs $1 &
   fi
 }
+alias emacs="startEmacs"
 
 # -- Miscellaneous aliases -- #
 alias weather='curl -4 wttr.in'
