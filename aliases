@@ -44,3 +44,9 @@ _cdpersonal(){
 
 compdef _cdwrk cdwrk
 compdef _cdpersonal cdpersonal
+
+# -- Work -- #
+if [ -d /opt/ros ];then
+  . ~/.aliases_work
+
+fi

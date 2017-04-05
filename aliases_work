@@ -1,0 +1,60 @@
+function cds(){
+  cd $AEROSTACK_STACK/$1
+}
+
+function cdw(){
+  cd $AEROSTACK_WORKSPACE/$1
+}
+
+function cdexecutive(){
+  cd $AEROSTACK_STACK/stack_devel/executive_system/$1
+}
+
+function cdaerostackmsgs(){
+  cd $AEROSTACK_STACK/stack/common/aerostack_msgs/$1
+}
+
+function cdconfigs(){
+  cd $AEROSTACK_STACK/configs/$1
+}
+
+function ckmirony(){
+  actual=$PWD
+  cdw
+  echo $#
+  if [ $# -gt 1 ]; then
+     catkin_make $1 $2
+  else
+     catkin_make
+  fi
+  cd $actual
+}
+
+# auto-complete
+_cds(){
+  _path_files -W $AEROSTACK_STACK -/
+}
+
+_cdw(){
+  _path_files -W $AEROSTACK_WORKSPACE -/
+}
+
+_cdexecutive(){
+  _path_files -W $AEROSTACK_STACK/stack_devel/executive_system -/
+}
+
+_cdconfigs(){
+  _path_files -W $AEROSTACK_STACK/configs -/
+}
+
+compdef _cds cds
+compdef _cdw cdw
+compdef _cdexecutive cdexecutive
+compdef _cdconfigs cdconfigs
+
+export PATH=$PATH:$AEROSTACK_STACK/launchers
+source /opt/ros/jade/setup.zsh
+export AEROSTACK_WORKSPACE=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws
+export AEROSTACK_STACK=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws/src/quadrotor_stack
+export DRONE_STACK=/home/alberto/workspace/ros/quadrotor_stack_catkin_ws/src/quadrotor_stack
+source $AEROSTACK_WORKSPACE/devel/setup.zsh

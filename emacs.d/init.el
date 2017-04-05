@@ -34,7 +34,7 @@
 ; Switch between camel cased & underscored
 (require 'string-inflection)
 (global-unset-key (kbd "C-q"))
-(global-set-key (kbd "C-q C-u") 'string-inflection-all-cycle)
+(global-set-key (kbd "C-q C-w") 'string-inflection-all-cycle)
 
 ;; Line numbers
 (global-linum-mode 1)
@@ -59,7 +59,7 @@
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
 ; move lines easily
-(global-set-key (kbd "M-s <up>") 'move-text-up) ; move-text-up code at the bottom
+(global-set-key (kbd "M-s <up>") 'move-text-up) ; move-text-up code at bottom
 (global-set-key (kbd "M-s <down>") 'move-text-down); move-text-down code at bottom
 
 
@@ -87,7 +87,7 @@
 (setq TeX-PDF-mode t)
 (require 'tex)
 (TeX-global-PDF-mode t)
-("preview-pane-mode" latex-preview-pane-mode)
+;("preview-pane-mode" latex-preview-pane-mode)
 
 ;; Rust
 (autoload 'rust-mode "rust-mode" nil t)
