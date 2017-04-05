@@ -46,6 +46,7 @@ if [ -d $HOME/.emacs.d ];then
   rm -rf $HOME/.emacs.d
 fi
 ln -s $EMACS_DIR $HOME/.emacs.d
+
 echo -e "$green[Done]$stop"
 
 echo "Installing zsh-autosuggestions & zsh-syntax-highlighting"
